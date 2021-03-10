@@ -1,4 +1,6 @@
-#include <WiFiManager.h> 
+#include <ArduinoJson.h>
+#include <LittleFS.h>
+#include <WiFiManager.h>
 
 /*
  * Note: ModeMCU stores wi-fi connection deets in a memory location that isn't 
@@ -22,8 +24,6 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFiManager wm;
 
-
-
   if(!wm.autoConnect("NodeMCU Setup")) {
     Serial.println("Unable to connect to Wi-Fi");
   } else {
@@ -34,6 +34,37 @@ void setup() {
   server.on("/", handleRoot);
   server.onNotFound(handleNotFound);
   server.begin();
+
+  // mess about with reading/writing
+
+  LittleFS.begin();
+  if (!LittleFS.exists("/data")) {
+    LittleFS.mkdir("/data");
+  }
+   
+  Dir dir = LittleFS.openDir("/data");
+  while (dir.next()) {
+    Serial.print(dir.fileName());
+    Serial.print(":");
+    if(dir.fileSize()) {
+      File f = dir.openFile("r");
+      Serial.println(f.size());
+    }
+  }
+
+  const int capacity = JSON_OBJECT_SIZE(2);
+  StaticJsonDocument<capacity> doc;
+  doc["name"] = "GKSensor";
+  doc["number"] = 48.748010;
+  serializeJsonPretty(doc, Serial);
+
+  File f = LittleFS.open("data/settings.json", "w");
+  if (!f) {
+    Serial.println("file open failed");
+  }
+  serializeJsonPretty(doc, f);
+  f.close();
+  
 }
 
 void loop() {
