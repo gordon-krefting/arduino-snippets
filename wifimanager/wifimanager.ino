@@ -135,5 +135,4 @@ void writeConfig() {
   File f = LittleFS.open("config.json", "w");
   serializeJson(doc, f);
   f.close();
-  serializeJson(doc, Serial);
 }
