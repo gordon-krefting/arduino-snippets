@@ -12,6 +12,7 @@ A bunch of stuff happening here:
   - Unfortunately, you have to use a plugin in the Arduino IDE to upload the web server template files... this wipes the config file as well
   - [Plugin](https://github.com/earlephilhower/arduino-esp8266littlefs-plugin)
   - There is a way to do this from command line using esptools.py (which gets installed with the board support), but I can't work out the command line yet
+  - I don't think there's a good way to leave the config file intact while uploading templates. There's no randomw access to LittleFS from outside the board, that plugin creates the whole file system and uploads it in one go
 
 
 
