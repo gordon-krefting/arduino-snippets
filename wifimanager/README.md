@@ -9,7 +9,8 @@ A bunch of stuff happening here:
   - There are templates in the _ino_/data directory
 - Using ArduinoJson.h to serialize/deserialize a config file, also stored in _ino_/data
 - Using LittleFS, the standard ESP8266 filesystem
-  - Unfortunately, you have to use the Arduino IDE to upload the web server template files... this wipes the config file as well
+  - Unfortunately, you have to use a plugin in the Arduino IDE to upload the web server template files... this wipes the config file as well
+  - [Plugin](https://github.com/earlephilhower/arduino-esp8266littlefs-plugin)
   - There is a way to do this from command line using esptools.py (which gets installed with the board support), but I can't work out the command line yet
 
 
